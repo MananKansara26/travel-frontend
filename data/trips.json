@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "Mediterranean Summer Adventure",
+    "destination": "Greece & Italy",
+    "startDate": "2024-09-01",
+    "endDate": "2024-09-15",
+    "description": "Explore the stunning coastlines of Greece and Italy. Visit ancient ruins, enjoy local cuisine, and relax on beautiful beaches.",
+    "openForJoin": true,
+    "participants": [
+      { "id": 1, "name": "Sarah Chen", "avatar": "/placeholder.svg?height=40&width=40" },
+      { "id": 2, "name": "Marco Rossi", "avatar": "/placeholder.svg?height=40&width=40" },
+      { "id": 3, "name": "Emma Wilson", "avatar": "/placeholder.svg?height=40&width=40" }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Southeast Asia Explorer",
+    "destination": "Thailand, Vietnam, Cambodia",
+    "startDate": "2024-10-01",
+    "endDate": "2024-10-21",
+    "description": "Immerse yourself in the vibrant cultures of Southeast Asia. From bustling Bangkok markets to serene temples and pristine beaches.",
+    "openForJoin": true,
+    "participants": [
+      { "id": 4, "name": "Raj Patel", "avatar": "/placeholder.svg?height=40&width=40" },
+      { "id": 5, "name": "Lisa Kim", "avatar": "/placeholder.svg?height=40&width=40" }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Patagonia Hiking Expedition",
+    "destination": "Chile & Argentina",
+    "startDate": "2024-11-01",
+    "endDate": "2024-11-14",
+    "description": "Challenge yourself with world-class hiking in Patagonia. Trek through stunning landscapes and witness nature's raw beauty.",
+    "openForJoin": false,
+    "participants": [
+      { "id": 6, "name": "Alex Johnson", "avatar": "/placeholder.svg?height=40&width=40" },
+      { "id": 7, "name": "Nina Bergström", "avatar": "/placeholder.svg?height=40&width=40" }
+    ]
+  }
+]

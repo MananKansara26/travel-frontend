@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "First Steps in Santorini",
+    "place": "Santorini, Greece",
+    "date": "2024-06-15",
+    "content": "Arrived in Santorini this morning and I'm already speechless. The white-washed buildings cascading down the cliff face are even more stunning in person than in photos. We checked into our hotel and immediately headed to the caldera viewpoint. The sunset was absolutely magical—the sky turned shades of orange, pink, and purple that I didn't even know existed. We sipped local Assyrtiko wine and watched the sun dip below the horizon. This is what travel dreams are made of.",
+    "images": ["/placeholder.svg?height=400&width=600"]
+  },
+  {
+    "id": 2,
+    "title": "Lost in Bali's Rice Terraces",
+    "place": "Ubud, Bali",
+    "date": "2024-07-10",
+    "content": "Today I rented a scooter and ventured off the beaten path. I got completely lost in the rice terraces, but it turned out to be the best decision. I stumbled upon a small temple where locals were making offerings. An elderly woman invited me to join them. We couldn't speak the same language, but we communicated through smiles and gestures. She gave me a flower and blessed me. Moments like these remind me why I travel.",
+    "images": ["/placeholder.svg?height=400&width=600"]
+  },
+  {
+    "id": 3,
+    "title": "Tokyo's Organized Chaos",
+    "place": "Tokyo, Japan",
+    "date": "2024-08-01",
+    "content": "Shibuya Crossing is absolutely insane. I watched from the Starbucks above as thousands of people crossed in perfect synchronization. It's like watching a choreographed dance. Later, I wandered into a tiny ramen shop tucked away in a side street. The chef prepared my bowl with such care and precision. The broth was rich and complex, the noodles perfectly chewy. I sat at the counter and watched him work his magic for other customers. This is authentic Tokyo.",
+    "images": ["/placeholder.svg?height=400&width=600"]
+  }
+]
