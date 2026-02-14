@@ -1,58 +1,67 @@
 "use client"
 
-import type React from "react"
-
-import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@apollo/client/react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { MapPin } from "lucide-react"
+import { REGISTER_MUTATION } from "@/graphql"
+import { showApiError } from "@/lib/api-error-toast"
+import { registerSchema, type RegisterSchema } from "@/lib/validation/auth"
 
 const locations = ["New York", "London", "Tokyo", "Paris", "Sydney", "Dubai", "Bangkok", "Barcelona"]
 
 export default function SignUpForm() {
   const router = useRouter()
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    location: "",
+  const [register, { loading }] = useMutation(REGISTER_MUTATION)
+
+  const form = useForm<RegisterSchema>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      password: "",
+      location: "",
+    },
   })
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setLoading(true)
-
+  const onSubmit = async (data: RegisterSchema) => {
     try {
-      if (!formData.fullName || !formData.email || !formData.password || !formData.location) {
-        setError("Please fill in all fields")
+      const result = await register({
+        variables: {
+          name: data.fullName,
+          email: data.email,
+          password: data.password,
+        },
+      })
+      const registerPayload = (result.data as { register?: unknown })?.register
+
+      if (!registerPayload) {
+        showApiError("Sign up failed. Please try again.", "Sign up failed")
         return
       }
-
-      // Store user session in localStorage
-      const user = {
-        name: formData.fullName,
-        email: formData.email,
-        location: formData.location,
-        signedUpAt: new Date().toISOString(),
-      }
-
-      localStorage.setItem("travelh_user", JSON.stringify(user))
-      router.push("/dashboard")
+      router.push("/sign-in")
     } catch (err) {
-      setError("Sign up failed. Please try again.")
-    } finally {
-      setLoading(false)
+      showApiError(err, "Sign up failed")
     }
   }
 
@@ -67,77 +76,97 @@ export default function SignUpForm() {
         <CardDescription>Join our community of travel enthusiasts</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <label htmlFor="fullName" className="text-sm font-medium">
-              Full Name
-            </label>
-            <Input
-              id="fullName"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
               name="fullName"
-              placeholder="John Doe"
-              value={formData.fullName}
-              onChange={handleChange}
-              disabled={loading}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Full Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="John Doe" disabled={loading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium">
-              Email
-            </label>
-            <Input
-              id="email"
+            <FormField
+              control={form.control}
               name="email"
-              type="email"
-              placeholder="you@example.com"
-              value={formData.email}
-              onChange={handleChange}
-              disabled={loading}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="you@example.com"
+                      disabled={loading}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="password" className="text-sm font-medium">
-              Password
-            </label>
-            <Input
-              id="password"
+            <FormField
+              control={form.control}
               name="password"
-              type="password"
-              placeholder="••••••••"
-              value={formData.password}
-              onChange={handleChange}
-              disabled={loading}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="••••••••"
+                      disabled={loading}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="location" className="text-sm font-medium">
-              Current Location
-            </label>
-            <select
-              id="location"
+            <FormField
+              control={form.control}
               name="location"
-              value={formData.location}
-              onChange={handleChange}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Current Location</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    disabled={loading}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select a location" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {locations.map((loc) => (
+                        <SelectItem key={loc} value={loc}>
+                          {loc}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {form.formState.errors.root && (
+              <p className="text-sm text-destructive">{form.formState.errors.root.message}</p>
+            )}
+            <Button
+              type="submit"
+              className="w-full bg-primary hover:bg-primary-dark text-primary-foreground"
               disabled={loading}
-              className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground"
             >
-              <option value="">Select a location</option>
-              {locations.map((loc) => (
-                <option key={loc} value={loc}>
-                  {loc}
-                </option>
-              ))}
-            </select>
-          </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
-          <Button
-            type="submit"
-            className="w-full bg-primary hover:bg-primary-dark text-primary-foreground"
-            disabled={loading}
-          >
-            {loading ? "Creating account..." : "Sign Up"}
-          </Button>
-        </form>
+              {loading ? "Creating account..." : "Sign Up"}
+            </Button>
+          </form>
+        </Form>
         <p className="text-sm text-muted-foreground text-center mt-4">
           Already have an account?{" "}
           <Link href="/sign-in" className="text-primary hover:underline font-medium">
