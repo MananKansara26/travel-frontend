@@ -19,6 +19,7 @@ import {
 import { LOGIN_MUTATION } from "@/graphql"
 import { showApiError } from "@/lib/api-error-toast"
 import { loginSchema, type LoginSchema } from "@/lib/validation/auth"
+import { toast } from "@/hooks/use-toast"
 
 export default function SignInForm() {
   const router = useRouter()
@@ -44,6 +45,7 @@ export default function SignInForm() {
       const { user, token } = loginPayload
       localStorage.setItem("travelh_token", token)
       localStorage.setItem("travelh_user", JSON.stringify(user))
+      toast({ title: "Sign in successful", description: "You are now logged in" , variant: "success"})
       router.push("/dashboard")
     } catch (err) {
       showApiError(err, "Sign in failed")

@@ -49,6 +49,6 @@ export function showApiError(error: unknown, title = "Error"): void {
   toast({
     title,
     description: message,
-    variant: "destructive",
+    variant: "error",
   })
 }
