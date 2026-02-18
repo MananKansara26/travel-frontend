@@ -2,6 +2,7 @@
 
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import Link from 'next/link'
 import Image from 'next/image'
 import { MapPin, Star } from 'lucide-react'
 
@@ -59,11 +60,11 @@ export function PlacesList({ places, onPlaceClick, isLoading = false }: PlacesLi
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {places.map((place) => (
-        <Card
-          key={place.id}
-          className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group"
-          onClick={() => onPlaceClick?.(place)}
-        >
+        <Link key={place.id} href={`/places/${place.id}`}>
+          <Card
+            className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group h-full"
+            onClick={() => onPlaceClick?.(place)}
+          >
           {/* Image */}
           <div className="relative aspect-video bg-muted overflow-hidden">
             <Image
@@ -114,6 +115,7 @@ export function PlacesList({ places, onPlaceClick, isLoading = false }: PlacesLi
             )}
           </div>
         </Card>
+        </Link>
       ))}
     </div>
   )

@@ -10,16 +10,20 @@ import trips from "@/data/trips.json"
 interface Trip {
   id: number
   title: string
-  destination: string
+  destination?: string
+  place?: string
   startDate: string
   endDate: string
   description: string
+  photos?: string[]
+  isPublic?: boolean
   openForJoin: boolean
   participants: Array<{
     id: number
     name: string
     avatar: string
   }>
+  moments?: number[]
 }
 
 export default function TripsList() {
@@ -74,7 +78,7 @@ export default function TripsList() {
                   <div className="space-y-2 text-sm text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <span>📍</span>
-                      <span className="line-clamp-1">{trip.destination}</span>
+                      <span className="line-clamp-1">{trip.place || trip.destination}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span>📅</span>
@@ -82,6 +86,12 @@ export default function TripsList() {
                         {new Date(trip.startDate).toLocaleDateString()} - {new Date(trip.endDate).toLocaleDateString()}
                       </span>
                     </div>
+                    {trip.moments && trip.moments.length > 0 && (
+                      <div className="flex items-center gap-2 text-primary">
+                        <span>✨</span>
+                        <span>{trip.moments.length} moment{trip.moments.length !== 1 ? "s" : ""}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 

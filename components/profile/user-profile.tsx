@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import ProfileEditModal, { type ProfileData } from "@/components/profile/profile-edit-modal"
 import places from "@/data/places.json"
 import trips from "@/data/trips.json"
 
@@ -34,6 +35,20 @@ export default function UserProfile() {
   })
   const [activeTab, setActiveTab] = useState<"overview" | "visited" | "trips" | "wishlist" | "feedback">("overview")
   const [showStatusForm, setShowStatusForm] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [profileData, setProfileData] = useState<ProfileData>({
+    name: "",
+    bio: "",
+    photo: "",
+    age: null,
+    gender: "",
+    profession: "",
+    city: "",
+    state: "",
+    country: "",
+    images: [],
+    interestedCategories: [],
+  })
   const [statusForm, setStatusForm] = useState({
     currentlyTraveling: user?.currentlyTraveling || false,
     currentTrip: user?.currentTrip || "",
@@ -48,6 +63,13 @@ export default function UserProfile() {
         currentlyTraveling: userData.currentlyTraveling || false,
         currentTrip: userData.currentTrip || "",
       })
+      // Load profile data if available
+      const storedProfile = localStorage.getItem("travelh_profile")
+      if (storedProfile) {
+        setProfileData(JSON.parse(storedProfile))
+      } else {
+        setProfileData((prev) => ({ ...prev, name: userData.name || "" }))
+      }
     }
 
     const storedWishlist = localStorage.getItem("travelh_wishlist")
@@ -72,6 +94,16 @@ export default function UserProfile() {
     }
   }
 
+  const handleProfileSave = (data: ProfileData) => {
+    setProfileData(data)
+    localStorage.setItem("travelh_profile", JSON.stringify(data))
+    if (user && data.name) {
+      const updated = { ...user, name: data.name }
+      setUser(updated)
+      localStorage.setItem("travelh_user", JSON.stringify(updated))
+    }
+  }
+
   if (!user) {
     return <div className="text-center py-12">Loading...</div>
   }
@@ -80,7 +112,14 @@ export default function UserProfile() {
   const userTrips = trips.slice(0, 2)
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+    <>
+      <ProfileEditModal
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        onSave={handleProfileSave}
+        initialData={profileData}
+      />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       {/* Profile Header */}
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-8">
@@ -98,7 +137,12 @@ export default function UserProfile() {
             )}
           </div>
           <div className="flex gap-2">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Edit Profile</Button>
+            <Button 
+              onClick={() => setShowEditModal(true)}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
+              Edit Profile
+            </Button>
             <Button variant="outline" onClick={() => setShowStatusForm(!showStatusForm)} className="border-border">
               {user.currentlyTraveling ? "Update Status" : "Set Status"}
             </Button>
@@ -421,5 +465,6 @@ export default function UserProfile() {
         )}
       </div>
     </div>
+    </>
   )
 }
