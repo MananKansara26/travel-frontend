@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "tripId": 1,
+    "title": "Arrival in Athens",
+    "description": "We arrived in Athens and immediately fell in love with the city. The Acropolis was our first stop, and the view was absolutely breathtaking.",
+    "type": "arrival",
+    "otherType": null,
+    "place": "Athens, Greece",
+    "photos": ["/placeholder.svg?height=400&width=600"],
+    "isPublic": true,
+    "createdAt": "2024-09-01"
+  },
+  {
+    "id": 2,
+    "tripId": 1,
+    "title": "Sunset at Santorini",
+    "description": "The most magical evening of our lives. Watched the sunset from the edge of the caldera with a glass of local wine.",
+    "type": "site_visit",
+    "otherType": null,
+    "place": "Santorini, Greece",
+    "photos": ["/placeholder.svg?height=400&width=600", "/placeholder.svg?height=400&width=600"],
+    "isPublic": true,
+    "createdAt": "2024-09-05"
+  },
+  {
+    "id": 3,
+    "tripId": 1,
+    "title": "Roman Holiday in Rome",
+    "description": "Explored the Colosseum and Vatican City. The history and architecture are beyond words.",
+    "type": "site_visit",
+    "otherType": null,
+    "place": "Rome, Italy",
+    "photos": ["/placeholder.svg?height=400&width=600"],
+    "isPublic": true,
+    "createdAt": "2024-09-12"
+  },
+  {
+    "id": 4,
+    "tripId": 2,
+    "title": "Bangkok Street Food Adventure",
+    "description": "Discovered amazing street food in the night markets. Pad Thai has never tasted so good!",
+    "type": "event",
+    "otherType": null,
+    "place": "Bangkok, Thailand",
+    "photos": ["/placeholder.svg?height=400&width=600"],
+    "isPublic": true,
+    "createdAt": "2024-10-02"
+  },
+  {
+    "id": 5,
+    "tripId": 2,
+    "title": "Temple Exploration in Chiang Mai",
+    "description": "Visited the beautiful temples of Chiang Mai. The monks were welcoming and shared stories about the temple's history.",
+    "type": "site_visit",
+    "otherType": null,
+    "place": "Chiang Mai, Thailand",
+    "photos": ["/placeholder.svg?height=400&width=600", "/placeholder.svg?height=400&width=600"],
+    "isPublic": true,
+    "createdAt": "2024-10-08"
+  },
+  {
+    "id": 6,
+    "tripId": 2,
+    "title": "Boat Ride in Halong Bay",
+    "description": "Cruising through the limestone karsts of Halong Bay. An unforgettable natural wonder.",
+    "type": "travel",
+    "otherType": null,
+    "place": "Halong Bay, Vietnam",
+    "photos": ["/placeholder.svg?height=400&width=600"],
+    "isPublic": true,
+    "createdAt": "2024-10-15"
+  },
+  {
+    "id": 7,
+    "tripId": 3,
+    "title": "Day 1: Torres del Paine Trek Start",
+    "description": "Started the famous W Trek. The first day was challenging but rewarding with stunning views.",
+    "type": "event",
+    "otherType": null,
+    "place": "Torres del Paine, Chile",
+    "photos": ["/placeholder.svg?height=400&width=600"],
+    "isPublic": false,
+    "createdAt": "2024-11-01"
+  },
+  {
+    "id": 8,
+    "tripId": 3,
+    "title": "Summit Views and Glacier",
+    "description": "Reached the base of the Torres del Paine at sunrise. The granite towers were magnificent against the morning sky.",
+    "type": "site_visit",
+    "otherType": null,
+    "place": "Patagonia, Chile",
+    "photos": ["/placeholder.svg?height=400&width=600"],
+    "isPublic": false,
+    "createdAt": "2024-11-07"
+  }
+]

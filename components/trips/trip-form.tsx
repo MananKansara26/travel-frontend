@@ -6,20 +6,25 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { ImageGallery } from "@/components/common/image-gallery"
 
 interface Trip {
   id: number
   title: string
-  destination: string
+  place?: string
+  destination?: string
   startDate: string
   endDate: string
   description: string
+  photos?: string[]
+  isPublic?: boolean
   openForJoin: boolean
   participants: Array<{
     id: number
     name: string
     avatar: string
   }>
+  moments?: number[]
 }
 
 interface Props {
@@ -32,10 +37,13 @@ const destinations = ["Greece & Italy", "Southeast Asia", "Patagonia", "Morocco"
 export default function TripForm({ onSubmit, onCancel }: Props) {
   const [formData, setFormData] = useState({
     title: "",
+    place: "",
     destination: "",
     startDate: "",
     endDate: "",
     description: "",
+    photos: [] as string[],
+    isPublic: true,
     openForJoin: false,
   })
 
@@ -50,8 +58,8 @@ export default function TripForm({ onSubmit, onCancel }: Props) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!formData.title || !formData.destination || !formData.startDate || !formData.endDate || !formData.description) {
-      alert("Please fill in all fields")
+    if (!formData.title || !formData.startDate || !formData.endDate || !formData.description) {
+      alert("Please fill in all required fields")
       return
     }
 
@@ -60,6 +68,7 @@ export default function TripForm({ onSubmit, onCancel }: Props) {
     const newTrip: Trip = {
       id: Date.now(),
       ...formData,
+      destination: formData.destination || formData.place,
       participants: [
         {
           id: 1,
@@ -67,6 +76,7 @@ export default function TripForm({ onSubmit, onCancel }: Props) {
           avatar: "/diverse-avatars.png",
         },
       ],
+      moments: [],
     }
 
     onSubmit(newTrip)
@@ -94,23 +104,16 @@ export default function TripForm({ onSubmit, onCancel }: Props) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label htmlFor="destination" className="text-sm font-medium">
-                Destination
+              <label htmlFor="place" className="text-sm font-medium">
+                Place (Optional)
               </label>
-              <select
-                id="destination"
-                name="destination"
-                value={formData.destination}
+              <Input
+                id="place"
+                name="place"
+                placeholder="e.g., Greece & Italy"
+                value={formData.place}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground"
-              >
-                <option value="">Select destination</option>
-                {destinations.map((dest) => (
-                  <option key={dest} value={dest}>
-                    {dest}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
 
             <div className="space-y-2">
@@ -141,6 +144,28 @@ export default function TripForm({ onSubmit, onCancel }: Props) {
               rows={4}
               className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground resize-none"
             />
+          </div>
+
+          <ImageGallery
+            images={formData.photos}
+            onImagesChange={(photos) => setFormData((prev) => ({ ...prev, photos }))}
+            maxImages={5}
+          />
+
+          <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
+            <input
+              id="isPublic"
+              type="checkbox"
+              checked={formData.isPublic}
+              onChange={(e) => setFormData((prev) => ({ ...prev, isPublic: e.target.checked }))}
+              className="w-4 h-4 rounded border-input"
+            />
+            <label htmlFor="isPublic" className="text-sm font-medium cursor-pointer flex-1">
+              Make this trip public
+            </label>
+            <span className="text-xs text-muted-foreground">
+              {formData.isPublic ? 'Everyone can see' : 'Only you can see'}
+            </span>
           </div>
 
           <div className="flex items-center gap-2">

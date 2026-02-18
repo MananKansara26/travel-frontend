@@ -57,6 +57,14 @@ export default function Navbar() {
                 isActive("/dashboard") ? "text-primary font-semibold" : "text-muted-foreground hover:text-foreground"
               }`}
             >
+              Dashboard
+            </Link>
+            <Link
+              href="/explore"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/explore") ? "text-primary font-semibold" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
               Explore
             </Link>
             <Link
@@ -66,6 +74,14 @@ export default function Navbar() {
               }`}
             >
               Trips
+            </Link>
+            <Link
+              href="/places"
+              className={`text-sm font-medium transition-colors ${
+                isActive("/places") ? "text-primary font-semibold" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Places
             </Link>
             <Link
               href="/profile"
@@ -94,13 +110,14 @@ export default function Navbar() {
               </div>
             </div>
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
               onClick={handleLogout}
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground gap-2"
               aria-label="Logout"
             >
-              ↪
+              <span>↪</span>
+              <span className="hidden lg:inline">Logout</span>
             </Button>
           </div>
 
@@ -127,6 +144,13 @@ export default function Navbar() {
               className="block px-4 py-2 text-sm font-medium text-foreground hover:bg-secondary rounded transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
+              Dashboard
+            </Link>
+            <Link
+              href="/explore"
+              className="block px-4 py-2 text-sm font-medium text-foreground hover:bg-secondary rounded transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               Explore
             </Link>
             <Link
@@ -135,6 +159,13 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Trips
+            </Link>
+            <Link
+              href="/places"
+              className="block px-4 py-2 text-sm font-medium text-foreground hover:bg-secondary rounded transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Places
             </Link>
             <Link
               href="/profile"
